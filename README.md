@@ -1,4 +1,4 @@
-# 2024.1_G2_Funcional_Filtro_Kalman
+# 2024.1_G1_Funcional_Filtro_Kalman
 
 # RepositorioTemplate
 Esse repositório é para ser utilizado pelos grupos como um template inicial, da home page do Projeto.
