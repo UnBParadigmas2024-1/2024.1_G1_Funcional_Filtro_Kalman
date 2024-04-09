@@ -35,6 +35,7 @@ Para implementar este projeto, será necessário um conhecimento sólido em Hask
 Referências úteis para o desenvolvimento deste projeto incluem:
 
 [Documentação do Haskell](https://www.haskell.org/documentation/)
+
 [Artigo sobre Filtro de Kalman em Haskell]()
 
 ## Screenshots
