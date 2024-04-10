@@ -12,6 +12,11 @@
 | 23/2022952  |  Leonardo de Souza Takehana |
 | 19/0026600  |  Davi Marinho da Silva Campos |
 | 19/0105267  |  Diógenes Dantas Lélis Júnior |
+| 19/0103302  |  Bernardo Chaves Pissutti |
+| 17/0161871  |  Denniel William Roriz Lima |
+| 18/0113321  |  Francisco Mizael Santos da Silva |
+| 19/0093196  |  Mateus Caltabiano Neves Frauzino |
+| 19/0091720  |  Lucas Macedo Barboza |
 
 ## Sobre 
 O projeto proposto visa implementar um filtro de Kalman em Haskell, uma linguagem de programação funcional, e suas funcionalidades associadas. O filtro de Kalman é um algoritmo de estimativa usado para estimar o estado de um sistema dinâmico a partir de medidas imprecisas e incompletas. Ele é amplamente utilizado em diversas áreas, como engenharia de controle, robótica, navegação, processamento de sinais e finanças.
@@ -71,6 +76,11 @@ Apresente, brevemente, como cada membro do grupo contribuiu para o projeto.
 | Leonardo de Souza Takehana  |  - | - |
 | Davi Marinho da Silva Campos  |  - | - |
 | Diógenes Dantas Lélis Júnior  |  - | - |
+| Bernardo Chaves Pissutti  |  - | - |
+| Denniel William Roriz Lima  |  - | - |
+| Francisco Mizael Santos da Silva  |  - | - |
+| Mateus Caltabiano Neves Frauzino  |  - | - |
+| Lucas Macedo Barboza  |  - | - |
 
 ## Outros 
 Quaisquer outras informações sobre o projeto podem ser descritas aqui. Não esqueça, entretanto, de informar sobre:
