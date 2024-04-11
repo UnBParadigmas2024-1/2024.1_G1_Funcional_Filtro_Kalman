@@ -5,5 +5,5 @@ data Parameters = Parameters{
     q :: Double,
     r1 :: Double,
     r2 :: Double,
-    n :: Int,
+    n :: Int
 }
