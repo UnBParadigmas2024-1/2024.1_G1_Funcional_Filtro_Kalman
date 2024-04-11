@@ -26,6 +26,8 @@ source-repository head
 library
   exposed-modules:
       Lib
+      Modules
+      Utils
   other-modules:
       Paths_project
   autogen-modules:
