@@ -1,42 +1,37 @@
 module Utils where
 
-import Numeric.LinearAlgebra
 import System.Random
 
 parseToInt :: String -> Int
 parseToInt str = read str
 
-generateMeasurements :: Double -> Double -> Double -> Int -> IO (Vector Double, Vector Double)
+generateMeasurements :: Double -> [[Double]] -> Int -> IO (Double, Double)
 generateMeasurements xReal r n' = do
-  let noise1 = randn n' * (sqrt r)
-      noise2 = randn n' * (sqrt r)
-      z1 = xReal + noise1
+  let r1 = sqrt (r !! 0 !! 0)
+      r2 = sqrt (r !! 1 !! 1)
+  noise1 <- randomRIO (-r1, r1)
+  noise2 <- randomRIO (-r2, r2)
+  let z1 = xReal + noise1
       z2 = xReal + noise2
   return (z1, z2)
 
-initialization :: Int -> (Vector Double, Vector Double)
-initialization n' =
-  let xHat0 = konst 0 n'
-      p0 = konst 1 n'
-  in (xHat0, p0)
+initialization :: Int -> (Double, Double)
+initialization _ = (0, 1)
 
-h :: Matrix Double
-h = (2><1) [1, 1]
+h :: [[Double]]
+h = [[1, 1]]
 
-r :: Matrix Double
-r = (2><2) [r1, 0, 0, r2]
-  where
-    r1 = 0.04  -- Variância do ruído de medição do sensor shunt
-    r2 = 0.09  -- Variância do ruído de medição do sensor Hall
+r :: [[Double]]
+r = [[0.04, 0], [0, 0.09]] 
 
-kalmanIteration :: (Vector Double, Vector Double) -> (Vector Double, Vector Double) -> Int -> (Vector Double, Vector Double)
-kalmanIteration (xHatPrev, pPrev) (z1, z2) k =
+kalmanIteration :: (Double, Double) -> (Double, Double) -> Int -> (Double, Double)
+kalmanIteration (xHatPrev, pPrev) (z1, z2) _ =
   let xHatPred = xHatPrev
-      pPred = pPrev + (konst q n)
-      z = (2><1) [z1 @> k, z2 @> k]
-      k' = inv (h <> pPred <> trans h + r)
-      xHat = xHatPred + k' #> (z - h <> xHatPred)
-      p = (ident n - k' <> h) <> pPred
-      n = length xHatPrev
-      q = 0.01  -- Variância do ruído do processo
+      pPred = pPrev + q
+      z = [z1, z2]
+      k' = map (\row -> map (\val -> val / (r1 + r2)) row) h
+      xHat = xHatPred + sum (zipWith (*) (zipWith (-) z (map (* xHatPred) (head h))) (map (* xHatPred) (head k')))
+      p = (1 - sum (map (sum . map (* xHatPrev)) k')) * pPred
+      q = 0.01 
+      (r1:r2:_) = map sum r
   in (xHat, p)
