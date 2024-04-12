@@ -5,8 +5,7 @@
 module EstatisticasAgrupamento
 ( mediaAgrupada
 , desvioPadraoReal
-, desvioPadraoAgrupamento
-, media
+, mediaAritmetica
 ) where
 
 -- mediaReal :: [[Double]] -> Double
@@ -18,12 +17,12 @@ mediaAgrupada dados = sum (map sum dados) / (fromIntegral (length dados) * fromI
 
 desvioPadraoReal :: [[Double]] -> Double
 desvioPadraoReal [[]] = 0 
-desvioPadraoReal dados = sqrt((sum (concat (map (map (\x -> (x - mediaAgrupada dados) ^ 2)) dados))) / (fromIntegral (length dados) * fromIntegral (length (head dados))))
+desvioPadraoReal dados = sqrt((sum (concat (map (map (\x -> (x - mediaAgrupada dados) ^ 2)) dados))) / (fromIntegral (length dados)))
 
 -- desvioPadraoAgrupamento :: [Double] -> Double
 -- desvioPadraoAgrupamento [] = 0
 -- desvioPadraoAgrupamento lista = sqrt (sum (map (\x -> (x - media lista) ^ 2) lista) / fromIntegral (length lista))
 
-media :: [Double] -> Double
-media [] = 0
-media conjunto = sum conjunto / fromIntegral (length conjunto)
+mediaAritmetica :: [Double] -> Double
+mediaAritmetica [] = 0
+mediaAritmetica conjunto = sum conjunto / fromIntegral (length conjunto)
