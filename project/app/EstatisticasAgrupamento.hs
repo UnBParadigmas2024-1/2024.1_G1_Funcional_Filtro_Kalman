@@ -18,6 +18,7 @@ mediaAgrupada dados = sum (map sum dados) / (fromIntegral (length dados) * fromI
 
 desvioPadraoReal :: [[Double]] -> Double
 desvioPadraoReal [[]] = 0 
+desvioPadraoReal dados = sqrt(sum (map (\x -> (x - mediaAgrupada lista) ^ 2) lista) / fromIntegral (length dados) * fromIntegral (length (head dados)))
 
 desvioPadraoAgrupamento :: [Double] -> Double
 desvioPadraoAgrupamento [] = 0
