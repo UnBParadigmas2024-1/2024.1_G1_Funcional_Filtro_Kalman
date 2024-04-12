@@ -20,9 +20,9 @@ desvioPadraoReal :: [[Double]] -> Double
 desvioPadraoReal [[]] = 0 
 desvioPadraoReal dados = sqrt((sum (concat (map (map (\x -> (x - mediaAgrupada dados) ^ 2)) dados))) / (fromIntegral (length dados) * fromIntegral (length (head dados))))
 
-desvioPadraoAgrupamento :: [Double] -> Double
-desvioPadraoAgrupamento [] = 0
-desvioPadraoAgrupamento lista = sqrt (sum (map (\x -> (x - media lista) ^ 2) lista) / fromIntegral (length lista))
+-- desvioPadraoAgrupamento :: [Double] -> Double
+-- desvioPadraoAgrupamento [] = 0
+-- desvioPadraoAgrupamento lista = sqrt (sum (map (\x -> (x - media lista) ^ 2) lista) / fromIntegral (length lista))
 
 media :: [Double] -> Double
 media [] = 0
