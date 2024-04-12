@@ -5,6 +5,9 @@ import System.Random
 parseToInt :: String -> Int
 parseToInt str = read str
 
+parseToDouble :: String -> Double
+parseToDouble str = read str
+
 initialization :: Int -> (Double, Double, Double, Double, Int)
 initialization _ = (x_real, r1, r2, q, n)
   where
