@@ -27,6 +27,7 @@ library
   exposed-modules:
       CSVConverter
       Lib
+      Parser
   other-modules:
       Paths_project
   autogen-modules:
@@ -35,11 +36,11 @@ library
       src
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
   build-depends:
-      base >=4.7 && <5,
-      cassava,
-      bytestring,
-      text,
-      vector
+      base >=4.7 && <5
+    , bytestring
+    , cassava
+    , text
+    , vector
   default-language: Haskell2010
 
 executable project-exe
@@ -53,9 +54,11 @@ executable project-exe
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , bytestring
+    , cassava
     , project
-    , vector
     , text
+    , vector
   default-language: Haskell2010
 
 test-suite project-test
@@ -70,6 +73,9 @@ test-suite project-test
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , bytestring
+    , cassava
     , project
-
+    , text
+    , vector
   default-language: Haskell2010

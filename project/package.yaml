@@ -24,6 +24,7 @@ dependencies:
 - cassava
 - vector
 - bytestring
+- text
 
 ghc-options:
 - -Wall
