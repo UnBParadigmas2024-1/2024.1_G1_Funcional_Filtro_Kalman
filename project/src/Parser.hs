@@ -5,6 +5,7 @@ module Parser
 import Data.Csv
 import qualified Data.ByteString.Lazy as BL
 import qualified Data.Vector as V
+import Control.Monad (forM_)
 
 groupAt :: Int -> [a] -> [[a]]
 groupAt n = go
@@ -19,4 +20,12 @@ parserCsv = do
         Left err -> error err
         --Right v -> V.forM_ v $ \(x, y) ->
         --    putStrLn $ show (y :: Float) ++ " // " ++ show (y :: Float)
-        Right v -> pure (groupAt 1000 (V.toList (fmap fst v)), groupAt 1000 (V.toList (fmap snd v))) 
+        ---Right v -> pure (groupAt 1000 (V.toList (fmap fst v)), groupAt 1000 (V.toList (fmap snd v))) 
+        Right v -> do
+            let list1 = groupAt 1000 (V.toList (fmap fst v))
+                list2 = groupAt 1000 (V.toList (fmap snd v))
+            forM_ list1 $ \row ->
+                putStrLn $ "List 1: " ++ show row
+            --forM_ list2 $ \row ->
+            --    putStrLn $ "List 2: " ++ show row
+            pure (list1, list2)
