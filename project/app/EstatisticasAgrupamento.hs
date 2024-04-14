@@ -6,7 +6,12 @@ module EstatisticasAgrupamento
 ( mediaAgrupada
 , desvioPadraoReal
 , mediaAritmetica
+, erroMediaAgrupada
+, erroDesvioPadraoReal
 ) where
+
+import Data.List (concatMap)
+import Data.Maybe (fromJust)
 
 -- mediaReal :: [[Double]] -> Double
 -- mediaReal [[]] = 0
@@ -26,3 +31,9 @@ desvioPadraoReal dados = sqrt((sum (concat (map (map (\x -> (x - mediaAgrupada d
 mediaAritmetica :: [Double] -> Double
 mediaAritmetica [] = 0
 mediaAritmetica conjunto = sum conjunto / fromIntegral (length conjunto)
+
+erroMediaAgrupada :: [[Double]] -> Double
+erroMediaAgrupada dados = abs (mediaAgrupada (map (\x -> [x]) (concat dados)) - mediaAritmetica (concat dados))
+
+erroDesvioPadraoReal :: [[Double]] -> Double
+erroDesvioPadraoReal dados = abs (desvioPadraoReal (map (\x -> [x]) (concat dados)) - desvioPadraoReal dados)
