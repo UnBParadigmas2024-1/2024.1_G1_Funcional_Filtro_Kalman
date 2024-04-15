@@ -9,6 +9,7 @@ module EstatisticasAgrupamento
 , mediaAritmetica
 , erroMediaAgrupada
 , erroDesvioPadraoReal
+, erroPadrao
 ) where
 
 import Data.List (concatMap)
@@ -41,3 +42,6 @@ erroMediaAgrupada dados = abs (mediaAgrupada (map (\x -> [x]) (concat dados)) - 
 
 erroDesvioPadraoReal :: [[Double]] -> Double
 erroDesvioPadraoReal dados = abs (desvioPadraoReal (map (\x -> [x]) (concat dados)) - desvioPadraoReal dados)
+
+erroPadrao :: [[Double]] -> Double
+erroPadrao dados = desvioPadraoReal dados / (sqrt (fromIntegral (length dados)) * fromIntegral (length (head dados)))
