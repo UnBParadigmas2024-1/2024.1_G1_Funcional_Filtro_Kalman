@@ -9,3 +9,4 @@ main = do
   putStrLn $ "Desvio Padrão Real: " ++ show (desvioPadraoReal dados)
   putStrLn $ "Erro Média Agrupada: " ++ show (erroMediaAgrupada dados)
   putStrLn $ "Erro Desvio Padrão Real: " ++ show (erroDesvioPadraoReal dados)
+  putStrLn $ "Erro Padrão: " ++ show (erroPadrao dados)
