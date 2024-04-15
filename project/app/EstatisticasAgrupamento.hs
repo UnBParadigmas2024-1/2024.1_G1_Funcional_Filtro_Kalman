@@ -5,6 +5,7 @@
 module EstatisticasAgrupamento
 ( mediaAgrupada
 , desvioPadraoReal
+, desvioPadraoAgrupamento
 , mediaAritmetica
 , erroMediaAgrupada
 , erroDesvioPadraoReal
@@ -20,13 +21,16 @@ import Data.Maybe (fromJust)
 mediaAgrupada :: [[Double]] -> Double
 mediaAgrupada dados = sum (map sum dados) / (fromIntegral (length dados) * fromIntegral (length (head dados)))
 
-desvioPadraoReal :: [[Double]] -> Double
-desvioPadraoReal [[]] = 0 
-desvioPadraoReal dados = sqrt((sum (concat (map (map (\x -> (x - mediaAgrupada dados) ^ 2)) dados))) / (fromIntegral (length dados)))
+--desvioPadraoReal :: [[Double]] -> Double
+--desvioPadraoReal [[]] = 0 
+--desvioPadraoReal dados = sqrt((sum (concat (map (map (\x -> (x - mediaAgrupada dados) ^ 2)) dados))) / (fromIntegral (length dados)))
 
--- desvioPadraoAgrupamento :: [Double] -> Double
--- desvioPadraoAgrupamento [] = 0
--- desvioPadraoAgrupamento lista = sqrt (sum (map (\x -> (x - media lista) ^ 2) lista) / fromIntegral (length lista))
+desvioPadraoReal :: [[Double]] -> Double
+desvioPadraoReal dados = sqrt ((sum (concat (map (\conjunto -> (map (\x -> (x - mediaAritmetica conjunto) ^ 2) conjunto)) dados))) / fromIntegral (length dados))
+
+desvioPadraoAgrupamento :: [Double] -> Double
+desvioPadraoAgrupamento [] = 0
+desvioPadraoAgrupamento lista = sqrt (sum (map (\x -> (x - mediaAritmetica lista) ^ 2) lista) / fromIntegral (length lista))
 
 mediaAritmetica :: [Double] -> Double
 mediaAritmetica [] = 0
