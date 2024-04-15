@@ -3,13 +3,9 @@
 
 module CSVConverter
   ( Item(..)
-  , ItemType(..)
   , encodeItems
   , encodeItemsToFile
-  , filterCountryItems
   , itemHeader
-  , japanItem
-  , japanRecord
   )
   where
 
@@ -43,78 +39,46 @@ import qualified Data.Text.Encoding as Text
 import Data.Vector (Vector)
 import qualified Data.Vector as Vector
 import qualified Data.Csv as Cassava
+import Data.Int (Int)
 
 -- Definição de dados
 data Item =
   Item
-    { itemName :: Text
-    , itemLink :: Text
-    , itemType :: ItemType
+    { itemPrediction :: Int
+    , itemMeasure :: Int
     }
   deriving (Eq, Show)
 
-data ItemType
-  = Country
-  | Other Text
-  deriving (Eq, Show)
 
 -- Instâncias para conversão CSV
 instance FromNamedRecord Item where
   parseNamedRecord m =
     Item
-      <$> m .: "Item"
-      <*> m .: "Link"
-      <*> m .: "Type"
+      <$> m .: "Predicao"
+      <*> m .: "Medicao"
 
 instance ToNamedRecord Item where
   toNamedRecord Item{..} =
     Cassava.namedRecord
-      [ "Item" .= itemName
-      , "Link" .= itemLink
-      , "Type" .= itemType
+      [ "Predicao" .= itemPrediction
+      , "Medicao" .= itemMeasure
       ]
-
-instance FromField ItemType where
-  parseField "International Country" =
-    pure Country
-
-  parseField otherType =
-    Other <$> parseField otherType
-
-instance ToField ItemType where
-  toField Country =
-    "International Country"
-
-  toField (Other otherType) =
-    toField otherType
 
 instance DefaultOrdered Item where
   headerOrder _ =
     Cassava.header
-      [ "Item"
-      , "Link"
-      , "Type"
+      [ "Predicao"
+      , "Medicao"
       ]
 
 -- Dados de exemplo
-japanItem :: Item
-japanItem =
-  Item
-    { itemName = "Japan"
-    , itemLink = "http://www.data.go.jp/"
-    , itemType = Country
-    }
 
-japanRecord :: ByteString
-japanRecord =
-  "Japan,http://www.data.go.jp/,International Country"
 
 itemHeader :: Header
 itemHeader =
   Vector.fromList
-    [ "Item"
-    , "Link"
-    , "Type"
+    [ "Predicao"
+    , "Medicao"
     ]
 
 -- Funções
@@ -128,12 +92,6 @@ catchShowIO action =
       -> IO (Either String a)
     handleIOException =
       return . Left . show
-
-filterCountryItems :: Vector Item -> Vector Item
-filterCountryItems = Vector.filter isCountryItem
-
-isCountryItem:: Item -> Bool
-isCountryItem = (==) Country . itemType
 
 encodeItems :: Vector Item -> ByteString
 encodeItems = Cassava.encodeDefaultOrderedByName . Foldable.toList
