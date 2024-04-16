@@ -5,7 +5,6 @@ module Parser
 import Data.Csv
 import qualified Data.ByteString.Lazy as BL
 import qualified Data.Vector as V
-import Control.Monad (forM_)
 
 groupAt :: Int -> [a] -> [[a]]
 groupAt n = go
@@ -13,19 +12,14 @@ groupAt n = go
         go xs = ys : go zs
             where ~(ys, zs) = splitAt n xs
 
-parserCsv :: IO ([[Float]], [[Float]])
-parserCsv = do
-    csvData <- BL.readFile "src/shunt.csv"
+parserCsv :: FilePath -> IO ([[Double]], [[Double]])
+parserCsv filePath = do
+    csvData <- BL.readFile filePath
     case decode NoHeader csvData of
         Left err -> error err
-        --Right v -> V.forM_ v $ \(x, y) ->
-        --    putStrLn $ show (y :: Float) ++ " // " ++ show (y :: Float)
-        ---Right v -> pure (groupAt 1000 (V.toList (fmap fst v)), groupAt 1000 (V.toList (fmap snd v))) 
-        Right v -> do
-            let list1 = groupAt 1000 (V.toList (fmap fst v))
-                list2 = groupAt 1000 (V.toList (fmap snd v))
-            forM_ list1 $ \row ->
-                putStrLn $ "List 1: " ++ show row
-            --forM_ list2 $ \row ->
-            --    putStrLn $ "List 2: " ++ show row
-            pure (list1, list2)
+        Right v ->
+            let xs = V.toList (V.map fst v)
+                ys = V.toList (V.map snd v)
+                groupedXs = groupAt 1000 xs
+                groupedYs = groupAt 1000 ys
+            in return (groupedXs, groupedYs)
