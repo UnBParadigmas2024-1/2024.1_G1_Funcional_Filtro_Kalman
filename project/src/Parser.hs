@@ -6,11 +6,22 @@ import Data.Csv
 import qualified Data.ByteString.Lazy as BL
 import qualified Data.Vector as V
 
+{--type CsvRow = (Double, Double)--}
+
 groupAt :: Int -> [a] -> [[a]]
 groupAt n = go
   where go [] = []
         go xs = ys : go zs
             where ~(ys, zs) = splitAt n xs
+
+{--
+parserCsv :: FilePath -> IO [[Double]]
+parserCsv filePath = do
+    csvData <- BL.readFile filePath
+    case decode NoHeader csvData :: Either String (V.Vector CsvRow) of
+        Left err -> error err
+       Right v -> return $ map (\(x, y) -> [x, y]) (V.toList v)
+--}
 
 parserCsv :: FilePath -> IO ([[Double]], [[Double]])
 parserCsv filePath = do

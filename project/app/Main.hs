@@ -25,3 +25,9 @@ main = do
     putStrLn "List 2:"
     mapM_ print list2
 
+    {--
+    let filePath = "src/shunt.csv"
+    list1 <- parserCsv filePath
+    print list1
+    --}
+
