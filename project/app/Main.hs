@@ -4,6 +4,7 @@ import Lib
 import CSVConverter
 import Data.Text (pack)
 import qualified Data.Vector as Vector
+import Parser
 
 main :: IO ()
 main = do
@@ -11,4 +12,12 @@ main = do
     let filePath = "kalman_filter.csv"
 
     encodeItemsToFile filePath items
+
+    let filePath = "src/shunt.csv"
+    (list1, list2) <- parserCsv filePath
+
+    mapM_ print list1
+
+    putStrLn "List 2:"
+    mapM_ print list2
 
