@@ -5,6 +5,7 @@ module CSVConverter
   ( Item(..)
   , encodeItems
   , encodeItemsToFile
+  , convertItems
   , itemHeader
   )
   where
@@ -54,21 +55,21 @@ data Item =
 instance FromNamedRecord Item where
   parseNamedRecord m =
     Item
-      <$> m .: "Predicao"
-      <*> m .: "Medicao"
+      <$> m .: "Tempo"
+      <*> m .: "Valor"
 
 instance ToNamedRecord Item where
   toNamedRecord Item{..} =
     Cassava.namedRecord
-      [ "Predicao" .= itemPrediction
-      , "Medicao" .= itemMeasure
+      [ "Tempo" .= itemPrediction
+      , "Valor" .= itemMeasure
       ]
 
 instance DefaultOrdered Item where
   headerOrder _ =
     Cassava.header
-      [ "Predicao"
-      , "Medicao"
+      [ "Tempo"
+      , "Valor"
       ]
 
 -- Dados de exemplo
@@ -77,8 +78,8 @@ instance DefaultOrdered Item where
 itemHeader :: Header
 itemHeader =
   Vector.fromList
-    [ "Predicao"
-    , "Medicao"
+    [ "Tempo"
+    , "Valor"
     ]
 
 -- Funções
@@ -92,6 +93,9 @@ catchShowIO action =
       -> IO (Either String a)
     handleIOException =
       return . Left . show
+
+convertItems :: [Int] -> [Int] -> [Item]
+convertItems = zipWith Item
 
 encodeItems :: Vector Item -> ByteString
 encodeItems = Cassava.encodeDefaultOrderedByName . Foldable.toList
