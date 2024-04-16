@@ -4,7 +4,7 @@ import EstatisticasAgrupamento
 
 main :: IO ()
 main = do
-  let dados = [[1.0, 2.0, 3.0], [4.0, 5.0, 6.0], [7.0, 8.0, 9.0]]
+  let dados = [[0.01, 0.040756], [0.02, -0.017995], [0.03, 0.005326]]
   putStrLn $ "Média Agrupada: " ++ show (mediaAgrupada dados)
   putStrLn $ "Desvio Padrão Real: " ++ show (desvioPadraoReal dados)
   putStrLn $ "Erro Média Agrupada: " ++ show (erroMediaAgrupada dados)
