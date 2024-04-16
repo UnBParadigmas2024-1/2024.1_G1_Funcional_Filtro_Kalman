@@ -24,7 +24,13 @@ mediaAritmetica conjunto = sum conjunto / fromIntegral (length conjunto)
 
 desvioPadraoReal :: [[Double]] -> Double
 desvioPadraoReal [] = 0
-desvioPadraoReal dados = sqrt ((sum (concat (map (\conjunto -> (map (\x -> (x - mediaAritmetica conjunto) ^ 2) conjunto)) dados))) / fromIntegral (length dados))
+desvioPadraoReal dados = 
+    let desvios = map desvioPadraoAgrupamento dados
+    in sum desvios / fromIntegral (length dados)
+
+-- desvioPadraoReal :: [[Double]] -> Double
+-- desvioPadraoReal [] = 0
+-- desvioPadraoReal dados = sqrt ((sum (concat (map (\conjunto -> (map (\x -> (x - mediaAritmetica conjunto) ^ 2) conjunto)) dados))) / fromIntegral (length dados))
 
 desvioPadraoAgrupamento :: [Double] -> Double
 desvioPadraoAgrupamento [] = 0
