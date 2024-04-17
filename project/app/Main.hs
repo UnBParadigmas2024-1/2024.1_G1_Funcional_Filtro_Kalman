@@ -16,18 +16,27 @@ main = do
     let filePath = "kalman_filter.csv"
 
     encodeItemsToFile filePath items
-
     let filePath = "src/shunt.csv"
-    (list1, list2) <- parserCsv filePath
+    -- Retorna os valores agrupados em uma lista de listas, com os valores das colunas agrupados em 32 litas de 1000 valores cada
+    (list1, list2) <- parserCsvGrouped filePath
 
+    putStrLn "List 2:"
     mapM_ print list1
 
     putStrLn "List 2:"
     mapM_ print list2
 
-    {--
-    let filePath = "src/shunt.csv"
+    -- Retorna uma lista de listas, onde cada lista menor contém o tempo a medição correspondende
     list1 <- parserCsv filePath
     print list1
-    --}
+
+    -- Retorna duas listas contendo os valores da primeira e segunda colunas do CSV, respectivamente.
+    (list1, list2) <- parserCsvNotGrouped filePath
+    print list1
+    print list2
+
+    -- Retorna uma lista contendo os valores da primeira e segunda colunas do CSV, respectivamente.
+    list1 <- parserCsvNotGroupedOne filePath
+    print list1
+    
 
