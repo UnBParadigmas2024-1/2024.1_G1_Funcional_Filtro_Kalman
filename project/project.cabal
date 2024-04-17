@@ -48,6 +48,7 @@ library
 executable project-exe
   main-is: Main.hs
   other-modules:
+      EstatisticasAgrupamento
       Paths_project
   autogen-modules:
       Paths_project

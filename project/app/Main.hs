@@ -11,6 +11,12 @@ main = do
     let tempo = [0, 1, 2, 3, 4]
     let valor = [4, 3, 2, 1, 0]
 
+    z1 <- generateMeasurements x_real' r1' n' 
+    z2 <- generateMeasurements x_real' r2' n'   
+  
+    putStrLn $ "Medições geradas para z1: " ++ show z1
+    putStrLn $ "Medições geradas para z2: " ++ show z2
+
     let elementos = convertItems tempo valor
     let items = Vector.fromList elementos
     let filePath = "kalman_filter.csv"
