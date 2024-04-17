@@ -9,6 +9,8 @@ module EstatisticasAgrupamento
 , erroMediaAgrupada
 , erroDesvioPadraoReal
 , erroPadrao
+, varianciaAgrupamento
+, varianciaReal
 ) where
 
 import Data.List (concatMap)
@@ -24,7 +26,7 @@ mediaAritmetica conjunto = sum conjunto / fromIntegral (length conjunto)
 
 desvioPadraoReal :: [[Double]] -> Double
 desvioPadraoReal [] = 0
-desvioPadraoReal dados = 
+desvioPadraoReal dados =
     let desvios = map desvioPadraoAgrupamento dados
     in sum desvios / fromIntegral (length dados)
 
@@ -36,9 +38,19 @@ desvioPadraoAgrupamento :: [Double] -> Double
 desvioPadraoAgrupamento [] = 0
 desvioPadraoAgrupamento lista = sqrt (sum (map (\x -> (x - mediaAritmetica lista) ^ 2) lista) / fromIntegral (length lista))
 
+varianciaAgrupamento :: [Double] -> Double
+varianciaAgrupamento [] = 0
+varianciaAgrupamento lista = desvioPadraoAgrupamento lista ^ 2
+
+varianciaReal :: [[Double]] -> Double
+varianciaReal [] = 0
+varianciaReal dados =
+    let desvios = map varianciaAgrupamento dados
+    in sum desvios / fromIntegral (length dados)
+
 erroMediaAgrupada :: [[Double]] -> Double
 erroMediaAgrupada [] = 0
-erroMediaAgrupada dados = 
+erroMediaAgrupada dados =
     let dadosConcatenados = concat dados
         gruposIndividuais = map (:[]) dadosConcatenados
         mediaAgrupadaGrupos = mediaAgrupada gruposIndividuais
@@ -51,7 +63,7 @@ erroMediaAgrupada dados =
 
 erroDesvioPadraoReal :: [[Double]] -> Double
 erroDesvioPadraoReal [] = 0
-erroDesvioPadraoReal dados = abs (desvioPadraoReal (map (\x -> [x]) (concat dados)) - desvioPadraoReal dados)
+erroDesvioPadraoReal dados = abs (desvioPadraoReal (map (: []) (concat dados)) - desvioPadraoReal dados)
 
 erroPadrao :: [[Double]] -> Double
 erroPadrao [] = 0
