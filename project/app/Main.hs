@@ -1,10 +1,10 @@
 module Main (main) where
 
+import Utils
+import Modules
 import Lib
-import CSVConverter
 import Data.Text (pack)
 import qualified Data.Vector as Vector
-import Parser
 
 main :: IO ()
 main = do
