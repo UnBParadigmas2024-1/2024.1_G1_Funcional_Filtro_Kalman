@@ -11,6 +11,7 @@ module EstatisticasAgrupamento
 , erroPadrao
 , varianciaAgrupamento
 , varianciaReal
+, varianciaDesvioPadraoReal
 ) where
 
 import Data.List (concatMap)
@@ -41,6 +42,10 @@ desvioPadraoAgrupamento lista = sqrt (sum (map (\x -> (x - mediaAritmetica lista
 varianciaAgrupamento :: [Double] -> Double
 varianciaAgrupamento [] = 0
 varianciaAgrupamento lista = desvioPadraoAgrupamento lista ^ 2
+
+varianciaDesvioPadraoReal :: [[Double]] -> Double
+varianciaDesvioPadraoReal [] = 0
+varianciaDesvioPadraoReal lista = desvioPadraoReal lista ^ 2
 
 varianciaReal :: [[Double]] -> Double
 varianciaReal [] = 0

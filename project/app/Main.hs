@@ -8,6 +8,7 @@ main = do
   putStrLn $ "Média Agrupada: " ++ show (mediaAgrupada dados)
   putStrLn $ "Desvio Padrão Real: " ++ show (desvioPadraoReal dados)
   putStrLn $ "Variancia Real: " ++ show (varianciaReal dados)
+  putStrLn $ "Variancia Desvio Padrao Real: " ++ show (varianciaDesvioPadraoReal dados)
   putStrLn $ "Variancia do primeiro grupo: " ++ show (varianciaAgrupamento (head dados))
   putStrLn $ "Erro Média Agrupada: " ++ show (erroMediaAgrupada dados)
   putStrLn $ "Erro Desvio Padrão Real: " ++ show (erroDesvioPadraoReal dados)
