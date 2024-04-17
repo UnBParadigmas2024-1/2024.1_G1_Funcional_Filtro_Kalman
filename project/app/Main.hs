@@ -3,27 +3,40 @@ module Main (main) where
 import Utils
 import Modules
 import Lib
+import Data.Text (pack)
+import qualified Data.Vector as Vector
 
 main :: IO ()
-main =  do
-  let (x_real', r1', r2', q', n') = initialization 0
-      r = [[1, 0], [0, 1]] -- Matriz identidade 2x2 como exemplo
-      h = [[1], [1]]
-      x0 = 10.0
-      p0 = 1.0
-  putStrLn $ "Valor de x_real: " ++ show x_real'
-  putStrLn $ "Valor de r1: " ++ show r1'
-  putStrLn $ "Valor de r2: " ++ show r2'
-  putStrLn $ "Valor de q: " ++ show q'
-  putStrLn $ "Valor de n: " ++ show n'
+main = do
+    let tempo = [0, 1, 2, 3, 4]
+    let valor = [4, 3, 2, 1, 0]
 
+    let elementos = convertItems tempo valor
+    let items = Vector.fromList elementos
+    let filePath = "kalman_filter.csv"
 
-  z1 <- generateMeasurements x_real' r1' n' 
-  z2 <- generateMeasurements x_real' r2' n'   
-  
-  putStrLn $ "Medições geradas para z1: " ++ show z1
-  putStrLn $ "Medições geradas para z2: " ++ show z2
+    encodeItemsToFile filePath items
+    let filePath = "src/shunt.csv"
+    -- Retorna os valores agrupados em uma lista de listas, com os valores das colunas agrupados em 32 litas de 1000 valores cada
+    (list1, list2) <- parserCsvGrouped filePath
 
-  result <- kalmanFilter z1 z2 q' r h x0 p0
-  print(result)
+    putStrLn "List 2:"
+    mapM_ print list1
+
+    putStrLn "List 2:"
+    mapM_ print list2
+
+    -- Retorna uma lista de listas, onde cada lista menor contém o tempo a medição correspondende
+    list1 <- parserCsv filePath
+    print list1
+
+    -- Retorna duas listas contendo os valores da primeira e segunda colunas do CSV, respectivamente.
+    (list1, list2) <- parserCsvNotGrouped filePath
+    print list1
+    print list2
+
+    -- Retorna uma lista contendo os valores da primeira e segunda colunas do CSV, respectivamente.
+    list1 <- parserCsvNotGroupedOne filePath
+    print list1
+    
 

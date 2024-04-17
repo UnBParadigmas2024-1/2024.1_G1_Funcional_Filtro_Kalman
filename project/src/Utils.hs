@@ -1,6 +1,153 @@
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE RecordWildCards #-}
+
 module Utils where
 
 import System.Random
+
+-- base
+import Control.Exception (IOException)
+import qualified Control.Exception as Exception
+import qualified Data.Foldable as Foldable
+
+-- bytestring
+import Data.ByteString.Lazy (ByteString)
+import qualified Data.ByteString.Lazy as ByteString
+
+import Data.Csv
+import qualified Data.ByteString.Lazy as BL
+import qualified Data.Vector as V
+
+-- cassava
+import Data.Csv
+  ( DefaultOrdered(headerOrder)
+  , FromField(parseField)
+  , FromNamedRecord(parseNamedRecord)
+  , Header
+  , ToField(toField)
+  , ToNamedRecord(toNamedRecord)
+  , (.:)
+  , (.=)
+  )
+import qualified Data.Csv as Cassava
+
+-- text
+import Data.Text (Text)
+import qualified Data.Text.Encoding as Text
+
+-- vector
+import Data.Vector (Vector)
+import qualified Data.Vector as Vector
+import qualified Data.Csv as Cassava
+import Data.Int (Int)
+
+-- Definição de dados
+data Item =
+  Item
+    { itemPrediction :: Int
+    , itemMeasure :: Int
+    }
+  deriving (Eq, Show)
+
+
+-- Instâncias para conversão CSV
+instance FromNamedRecord Item where
+  parseNamedRecord m =
+    Item
+      <$> m .: "Tempo"
+      <*> m .: "Valor"
+
+instance ToNamedRecord Item where
+  toNamedRecord Item{..} =
+    Cassava.namedRecord
+      [ "Tempo" .= itemPrediction
+      , "Valor" .= itemMeasure
+      ]
+
+instance DefaultOrdered Item where
+  headerOrder _ =
+    Cassava.header
+      [ "Tempo"
+      , "Valor"
+      ]
+
+-- Dados de exemplo
+
+itemHeader :: Header
+itemHeader =
+  Vector.fromList
+    [ "Tempo"
+    , "Valor"
+    ]
+
+-- Funções
+catchShowIO:: IO a -> IO (Either String a)
+catchShowIO action =
+  fmap Right action
+    `Exception.catch` handleIOException
+  where
+    handleIOException
+      :: IOException
+      -> IO (Either String a)
+    handleIOException =
+      return . Left . show
+
+type CsvRow = (Double, Double)
+
+groupAt :: Int -> [a] -> [[a]]
+groupAt n = go
+  where go [] = []
+        go xs = ys : go zs
+            where ~(ys, zs) = splitAt n xs
+
+
+parserCsvGrouped :: FilePath -> IO ([[Double]], [[Double]])
+parserCsvGrouped filePath = do
+    csvData <- BL.readFile filePath
+    case decode NoHeader csvData of
+        Left err -> error err
+        Right v ->
+            let xs = V.toList (V.map fst v)
+                ys = V.toList (V.map snd v)
+                groupedXs = groupAt 1000 xs
+                groupedYs = groupAt 1000 ys
+            in return (groupedXs, groupedYs)
+
+parserCsv :: FilePath -> IO [[Double]]
+parserCsv filePath = do
+    csvData <- BL.readFile filePath
+    case decode NoHeader csvData :: Either String (V.Vector CsvRow) of
+        Left err -> error err
+        Right v -> return $ map (\(x, y) -> [x, y]) (V.toList v)
+
+
+parserCsvNotGrouped :: FilePath -> IO ([Double], [Double])
+parserCsvNotGrouped filePath = do
+    csvData <- BL.readFile filePath
+    case decode NoHeader csvData :: Either String (V.Vector CsvRow) of
+        Left err -> error err
+        Right v -> do
+            let (xs, ys) = V.foldr' (\(x, y) (accX, accY) -> (x : accX, y : accY)) ([], []) v
+            return (xs, ys)
+
+
+parserCsvNotGroupedOne :: FilePath -> IO [[Double]]
+parserCsvNotGroupedOne filePath = do
+    csvData <- BL.readFile filePath
+    case decode NoHeader csvData :: Either String (V.Vector CsvRow) of
+        Left err -> error err
+        Right v -> do
+            let (xs, ys) = V.foldr' (\(x, y) (accX, accY) -> (x : accX, y : accY)) ([], []) v
+            return [reverse xs, reverse ys]
+
+convertItems :: [Int] -> [Int] -> [Item]
+convertItems = zipWith Item
+
+encodeItems :: Vector Item -> ByteString
+encodeItems = Cassava.encodeDefaultOrderedByName . Foldable.toList
+
+encodeItemsToFile :: FilePath -> Vector Item -> IO ()
+encodeItemsToFile filePath = ByteString.writeFile filePath . encodeItems
 
 parseToInt :: String -> Int
 parseToInt str = read str
