@@ -24,6 +24,6 @@ main =  do
   putStrLn $ "Medições geradas para z1: " ++ show z1
   putStrLn $ "Medições geradas para z2: " ++ show z2
 
-  result <- processStacks z1 z2 q' r h x0 p0
+  result <- kalmanFilter z1 z2 q' r h x0 p0
   print(result)
 

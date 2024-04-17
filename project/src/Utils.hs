@@ -69,15 +69,15 @@ extractDouble :: [[Double]] -> Double
 extractDouble [[x]] = x
 extractDouble _ = error "Lista não contém um único elemento"
 
-processStacks :: [Double] -> [Double] -> Double -> [[Double]] -> [[Double]] -> Double -> Double -> IO [Double]
-processStacks [] [] _ _ _ _ _ = return []
-processStacks (z1:zs1) (z2:zs2) q r h x0 p0 = do
+kalmanFilter :: [Double] -> [Double] -> Double -> [[Double]] -> [[Double]] -> Double -> Double -> IO [Double]
+kalmanFilter [] [] _ _ _ _ _ = return []
+kalmanFilter (z1:zs1) (z2:zs2) q r h x0 p0 = do
   let
       p=p0+q
       z = [[z1],[z2]]
       k = multiplyMatrixByConstant p (multiplyMatrices (transposeMatrix h) (inverseMatrix (addMatrices (multiplyMatrices (multiplyMatrixByConstant p h) (transposeMatrix h)) r)))
       x_new= x0 + extractDouble (multiplyMatrices k (subMatrices z (multiplyMatrixByConstant x0 h)))
       p_new = (1-extractDouble (multiplyMatrices k h)) * p
-  rest <- processStacks zs1 zs2 q r h x_new p_new
+  rest <- kalmanFilter zs1 zs2 q r h x_new p_new
   let result = x_new : rest
   return result
