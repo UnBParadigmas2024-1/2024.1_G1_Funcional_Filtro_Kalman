@@ -25,9 +25,9 @@ source-repository head
 
 library
   exposed-modules:
+      Datas
       Lib
       Menu
-      Modules
       Utils
   other-modules:
       Paths_project

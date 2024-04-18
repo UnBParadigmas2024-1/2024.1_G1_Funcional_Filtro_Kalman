@@ -3,47 +3,9 @@ module Menu where
 
 import Utils
 
-import System.Random
-import Data.List (concatMap)
-import Data.Maybe (fromJust)
 import System.IO
-
-
--- base
-import Control.Exception (IOException)
-import qualified Control.Exception as Exception
-import qualified Data.Foldable as Foldable
-
--- bytestring
-import Data.ByteString.Lazy (ByteString)
-import qualified Data.ByteString.Lazy as ByteString
-
-import Data.Csv
-import qualified Data.ByteString.Lazy as BL
-import qualified Data.Vector as V
-
--- cassava
-import Data.Csv
-  ( DefaultOrdered(headerOrder)
-  , FromField(parseField)
-  , FromNamedRecord(parseNamedRecord)
-  , Header
-  , ToField(toField)
-  , ToNamedRecord(toNamedRecord)
-  , (.:)
-  , (.=)
-  )
-import qualified Data.Csv as Cassava
-
--- text
-import Data.Text (Text)
-import qualified Data.Text.Encoding as Text
-
--- vector
 import Data.Vector (Vector)
 import qualified Data.Vector as Vector
-import qualified Data.Csv as Cassava
-import Data.Int (Int)
 
 mainMenu ::  Double -> Double -> Double -> Double -> Double -> Double -> [Double] -> [Double] -> [Double] -> IO ()
 mainMenu media1 desvio1 variancia1 media2 desvio2 variancia2 tempo sensor1 sensor2 = do     
