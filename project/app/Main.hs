@@ -4,4 +4,4 @@ import Utils
 main :: IO ()
 main = do
     hSetBuffering stdout NoBuffering 
-    mainMenu
+    mainMenu 0.0 0.0 0.0

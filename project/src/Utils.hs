@@ -281,8 +281,8 @@ submenu = do
             putStrLn "Opção inválida!"
             submenu
 
-mainMenu :: IO ()
-mainMenu = do    
+mainMenu :: Double -> Double -> Double -> IO ()
+mainMenu media desvio variancia  =  do    
     
     --putStr "\ESC[2J\ESC[H" 
     putStrLn "Selecione uma opcao:"
@@ -305,35 +305,35 @@ mainMenu = do
             media <- mediaAgrupada list2
             desvio <- desvioPadraoReal list2
             variancia <- varianciaReal desvio
-            print media
-            print desvio
-            print variancia
-            mainMenu
+            -- print media
+            -- print desvio
+            -- print variancia
+            mainMenu media desvio variancia
         "2" -> do
             putStr "Digite o caminho do seu arquivo:"
             path <- getLine
             (list1, list2) <- parserCsvGrouped path
 
 
-            mainMenu
+            mainMenu media desvio variancia
         "3" -> do
             putStr "Digite o caminho do seu arquivo:"
             path <- getLine
             (list1, list2) <- parserCsvNotGrouped path
-            mainMenu
+            mainMenu media desvio variancia
         "4" -> do
             putStr "Digite o caminho do seu arquivo:"
             path <- getLine
             (list1, list2) <- parserCsvNotGrouped path
-            mainMenu
+            mainMenu media desvio variancia
         "5" -> do
-            mainMenu
+            mainMenu media desvio variancia
         "6" -> do
             submenu
-            mainMenu
+            mainMenu media desvio variancia
         "7" -> do
-            mainMenu
+            mainMenu media desvio variancia
         "8" -> putStrLn "Saindo..."
         _ -> do
             putStrLn "Opção inválida!"
-            mainMenu
+            mainMenu media desvio variancia
