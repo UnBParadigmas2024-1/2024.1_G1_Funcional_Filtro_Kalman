@@ -26,8 +26,8 @@ source-repository head
 library
   exposed-modules:
       Lib
+      Menu
       Modules
-      Parser
       Utils
   other-modules:
       Paths_project
@@ -48,7 +48,6 @@ library
 executable project-exe
   main-is: Main.hs
   other-modules:
-      EstatisticasAgrupamento
       Paths_project
   autogen-modules:
       Paths_project
