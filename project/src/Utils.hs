@@ -311,7 +311,7 @@ submenu = do
 mainMenu :: IO ()
 mainMenu = do    
     
-    putStr "\ESC[2J\ESC[H" 
+    --putStr "\ESC[2J\ESC[H" 
     putStrLn "Selecione uma opcao:"
     putStrLn "1. Setar valores estatísticos do sensor 1"
     putStrLn "2. Setar valores estatísticos do sensor 2"
@@ -322,16 +322,28 @@ mainMenu = do
     putStrLn "7. Exportar o CSV da saída filtrada"
     putStrLn "8. Sair"
     putStr "Opcao: "
-    hFlush stdout
+    --hFlush stdout
     option <- getLine
     case option of
         "1" -> do
+            putStr "Digite o caminho do seu arquivo:"
+            path <- getLine
+            (list1, list2) <- parserCsvGrouped path
             mainMenu
         "2" -> do
+            putStr "Digite o caminho do seu arquivo:"
+            path <- getLine
+            (list1, list2) <- parserCsvGrouped path
             mainMenu
         "3" -> do
+            putStr "Digite o caminho do seu arquivo:"
+            path <- getLine
+            (list1, list2) <- parserCsvNotGrouped path
             mainMenu
         "4" -> do
+            putStr "Digite o caminho do seu arquivo:"
+            path <- getLine
+            (list1, list2) <- parserCsvNotGrouped path
             mainMenu
         "5" -> do
             mainMenu
