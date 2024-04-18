@@ -1,5 +1,5 @@
 
-module MenuModules
+module Menu
     ( submenu, showSubMenu, getFluxSubMenu, mainMenu, getFluxMainMenu, showMenu
     ) where
 
