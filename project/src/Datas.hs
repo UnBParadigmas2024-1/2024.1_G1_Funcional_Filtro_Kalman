@@ -3,17 +3,6 @@
 
 module Datas where
 
-import Data.Csv
-  ( DefaultOrdered(headerOrder)
-  , FromField(parseField)
-  , FromNamedRecord(parseNamedRecord)
-  , Header
-  , ToField(toField)
-  , ToNamedRecord(toNamedRecord)
-  , (.:)
-  , (.=)
-  )
-
 import Data.Csv as Cassava
 
 data Parameters = Parameters{
