@@ -26,6 +26,7 @@ source-repository head
 library
   exposed-modules:
       Lib
+      Menu
       Modules
       Utils
   other-modules:
