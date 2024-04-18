@@ -1,2 +1,8 @@
 .stack-work/
 *~
+dist-newstyle/
+hallValues.csv
+hallVariance.csv
+shuntValues.csv
+shuntVariance.csv
+kalman_filter.csv
