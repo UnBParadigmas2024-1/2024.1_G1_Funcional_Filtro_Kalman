@@ -1,6 +1,7 @@
-module Main (main) where
-
-import Lib
+import System.IO
+import Menu 
 
 main :: IO ()
-main = someFunc
+main = do
+    hSetBuffering stdout NoBuffering -- Para evitar atrasos na exibição do menu
+    mainMenu
