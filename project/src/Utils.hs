@@ -233,54 +233,28 @@ kalmanFilter (z1:zs1) (z2:zs2) q r h x0 p0 = do
   let result = x_new : rest
   return result
 
-mediaAgrupada :: [[Double]] -> Double
-mediaAgrupada [] = 0
-mediaAgrupada dados = sum (map sum dados) / (fromIntegral (length dados) * fromIntegral (length (head dados)))
+mediaAgrupada :: [[Double]] -> IO (Double)
+mediaAgrupada [[]] = return 0.0
+mediaAgrupada dados = do 
+      return (sum (map sum dados) / (fromIntegral (length dados) * fromIntegral (length (head dados))))
 
 mediaAritmetica :: [Double] -> Double
-mediaAritmetica [] = 0
+mediaAritmetica [] = 0.0
 mediaAritmetica conjunto = sum conjunto / fromIntegral (length conjunto)
 
-desvioPadraoReal :: [[Double]] -> Double
-desvioPadraoReal [] = 0
-desvioPadraoReal dados =
-    let desvios = map desvioPadraoAgrupamento dados
-    in sum desvios / fromIntegral (length dados)
+desvioPadraoReal :: [[Double]] -> IO (Double)
+desvioPadraoReal [[]] = return 0.0
+desvioPadraoReal dados = do
+    return (let desvios = map desvioPadraoAgrupamento dados 
+        in sum desvios / fromIntegral (length dados))
 
 desvioPadraoAgrupamento :: [Double] -> Double
 desvioPadraoAgrupamento [] = 0
 desvioPadraoAgrupamento lista = sqrt (sum (map (\x -> (x - mediaAritmetica lista) ^ 2) lista) / fromIntegral (length lista))
 
-varianciaAgrupamento :: [Double] -> Double
-varianciaAgrupamento [] = 0
-varianciaAgrupamento lista = desvioPadraoAgrupamento lista ^ 2
-
-varianciaDesvioPadraoReal :: [[Double]] -> Double
-varianciaDesvioPadraoReal [] = 0
-varianciaDesvioPadraoReal lista = desvioPadraoReal lista ^ 2
-
-varianciaReal :: [[Double]] -> Double
-varianciaReal [] = 0
-varianciaReal dados =
-    let desvios = map varianciaAgrupamento dados
-    in sum desvios / fromIntegral (length dados)
-
-erroMediaAgrupada :: [[Double]] -> Double
-erroMediaAgrupada [] = 0
-erroMediaAgrupada dados =
-    let dadosConcatenados = concat dados
-        gruposIndividuais = map (:[]) dadosConcatenados
-        mediaAgrupadaGrupos = mediaAgrupada gruposIndividuais
-        mediaTotal = mediaAritmetica dadosConcatenados
-    in abs (mediaAgrupadaGrupos - mediaTotal)
-
-erroDesvioPadraoReal :: [[Double]] -> Double
-erroDesvioPadraoReal [] = 0
-erroDesvioPadraoReal dados = abs (desvioPadraoReal (map (: []) (concat dados)) - desvioPadraoReal dados)
-
-erroPadrao :: [[Double]] -> Double
-erroPadrao [] = 0
-erroPadrao dados = desvioPadraoReal dados / (sqrt (fromIntegral (length dados)) * fromIntegral (length (head dados)))
+varianciaReal :: Double -> IO (Double)
+varianciaReal variancia = do 
+    return (variancia ^ 2)
 
 submenu :: IO ()
 submenu = do
@@ -303,7 +277,6 @@ submenu = do
             submenu
         "4" -> do 
             putStrLn "Voltando ao menu principal..."
-
         _ -> do
             putStrLn "Opção inválida!"
             submenu
@@ -329,11 +302,19 @@ mainMenu = do
             putStr "Digite o caminho do seu arquivo:"
             path <- getLine
             (list1, list2) <- parserCsvGrouped path
+            media <- mediaAgrupada list2
+            desvio <- desvioPadraoReal list2
+            variancia <- varianciaReal desvio
+            print media
+            print desvio
+            print variancia
             mainMenu
         "2" -> do
             putStr "Digite o caminho do seu arquivo:"
             path <- getLine
             (list1, list2) <- parserCsvGrouped path
+
+
             mainMenu
         "3" -> do
             putStr "Digite o caminho do seu arquivo:"
