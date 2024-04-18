@@ -1,5 +1,5 @@
 import System.IO
-import Utils 
+import Menu
 
 main :: IO ()
 main = do
