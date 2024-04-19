@@ -21,6 +21,44 @@ submenu tempo sensor1 sensor2 signal =  do
     option <- getLine
     getFluxSubMenu option tempo sensor1 sensor2 signal
 
+
+showSubMenu :: IO()
+showSubMenu = do
+    putStr "\ESC[2J\ESC[H" 
+    putStrLn "Submenu - Selecione uma opcao:"
+    putStrLn "1. Plotar grafico do sensor 1"
+    putStrLn "2. Plotar grafico do sensor 2"
+    putStrLn "3. Plotar graficos da saida filtrada"
+    putStrLn "4. Exportar o CSV da saída filtrada"
+    putStrLn "5. Voltar ao menu principal"
+    putStr "Opcao: "
+
+getFluxSubMenu :: String -> [Double] -> [Double] -> [Double] -> [Double] -> IO ()
+getFluxSubMenu option tempo sensor1 sensor2 signal =  do
+    case option of
+        "1" -> do
+            let grafico = renderGraf tempo sensor1
+            saveGraf grafico (Just "sensor1") (Just "png")
+            submenu tempo sensor1 sensor2 signal
+        "2" -> do
+            let grafico = renderGraf tempo sensor2
+            saveGraf grafico (Just "sensor2") (Just "png")
+            submenu tempo sensor1 sensor2 signal
+        "3" -> do
+            let grafico = renderGraf tempo signal
+            saveGraf grafico (Just "sinal") (Just "png")
+            submenu tempo sensor1 sensor2 signal
+        "4" -> do 
+            items <- return (Vector.fromList(convertItems tempo signal))
+            filePath <- return ("kalman_filter.csv")
+            encodeItemsToFile filePath items
+            submenu tempo sensor1 sensor2 signal
+        "5" -> do 
+            putStrLn "Voltando ao menu principal..."
+        _ -> do
+            putStrLn "Opção inválida!"
+            submenu tempo sensor1 sensor2 signal
+            
 showMenu :: IO()
 showMenu = do
     putStr "\ESC[2J\ESC[H" 
@@ -34,16 +72,7 @@ showMenu = do
     putStrLn "7. Sair"
     putStr "Opcao: "
     
-showSubMenu :: IO()
-showSubMenu = do
-    putStr "\ESC[2J\ESC[H" 
-    putStrLn "Submenu - Selecione uma opcao:"
-    putStrLn "1. Plotar grafico do sensor 1"
-    putStrLn "2. Plotar grafico do sensor 2"
-    putStrLn "3. Plotar graficos da saida filtrada"
-    putStrLn "4. Exportar o CSV da saída filtrada"
-    putStrLn "5. Voltar ao menu principal"
-    putStr "Opcao: "
+
 
 
 getFluxMainMenu :: String -> Double -> Double -> Double -> Double -> Double -> Double -> [Double] -> [Double] -> [Double] -> IO ()
@@ -96,25 +125,7 @@ getFluxMainMenu option media1 desvio1 variancia1 media2 desvio2 variancia2 tempo
             putStrLn "Opção inválida!"
             mainMenu media1 desvio1 variancia1 media2 desvio2 variancia2 tempo sensor1 sensor2
 
-getFluxSubMenu :: String -> [Double] -> [Double] -> [Double] -> [Double] -> IO ()
-getFluxSubMenu option tempo sensor1 sensor2 signal =  do
-    case option of
-        "1" -> do
-            submenu tempo sensor1 sensor2 signal
-        "2" -> do
-            submenu tempo sensor1 sensor2 signal
-        "3" -> do
-            submenu tempo sensor1 sensor2 signal
-        "4" -> do 
-            items <- return (Vector.fromList(convertItems tempo signal))
-            filePath <- return ("kalman_filter.csv")
-            encodeItemsToFile filePath items
-            submenu tempo sensor1 sensor2 signal
-        "5" -> do 
-            putStrLn "Voltando ao menu principal..."
-        _ -> do
-            putStrLn "Opção inválida!"
-            submenu tempo sensor1 sensor2 signal
+
 
 showStatistics :: Double -> Double -> Double -> Double -> Double -> Double -> IO()   
 showStatistics media1 desvio1 variancia1 media2 desvio2 variancia2 = do

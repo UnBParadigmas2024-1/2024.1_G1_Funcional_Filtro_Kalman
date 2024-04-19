@@ -26,6 +26,9 @@ dependencies:
 - bytestring
 - text
 - random
+- Chart
+- Chart-cairo
+- Chart-diagrams 
 
 ghc-options:
 - -Wall
