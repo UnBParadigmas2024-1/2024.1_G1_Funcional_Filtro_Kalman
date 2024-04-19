@@ -130,6 +130,9 @@ que o haskel consiga interpretar e Exportar os dados de saída (csv);
 * **Trio D**: Plotar no dados no gráficos de forma sobreposta (Valores de erro, Médias,
 Desvio)
 
+### Percepções 
+    * Dificuldade em se adaptar a linguagem e ao paradigma funcional;
+    * Dificuldade na instalação das bibliotecas de gráficos
 (i) Lições Aprendidas;
 (ii) Percepções;
 (iV) Trabalhos Futuros.
