@@ -132,7 +132,6 @@ Desvio)
 
 (i) Lições Aprendidas;
 (ii) Percepções;
-(iii) Contribuições e Fragilidades, e
 (iV) Trabalhos Futuros.
 
 ## Fontes
