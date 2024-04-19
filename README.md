@@ -44,14 +44,57 @@ Referências úteis para o desenvolvimento deste projeto incluem:
 [Artigo sobre Filtro de Kalman em Haskell]()
 
 ## Screenshots
-Adicione 2 ou mais screenshots do projeto em termos de interface e/ou funcionamento.
+<!-- Adicione 2 ou mais screenshots do projeto em termos de interface e/ou funcionamento. -->
+1. Menu principal 
+
+![Menu](project/shared/mainMenu.jpg)
+
+2. Dados de valores
+
+![Funções](project/shared/functions.jpg)
 
 ## Instalação 
 **Linguagens**: Haskell<br>
-**Tecnologias**: xxxxxx<br>
-Descreva os pré-requisitos para rodar o seu projeto e os comandos necessários.
+**Tecnologias**: Stack<br>
+<!-- Descreva os pré-requisitos para rodar o seu projeto e os comandos necessários.
 Insira um manual ou um script para auxiliar ainda mais.
-Gifs animados e outras ilustrações são bem-vindos!
+Gifs animados e outras ilustrações são bem-vindos! -->
+1. Instalar o GHC em https://www.haskell.org/ghc/
+2. Instalar o stack em seu ambiente
+###  Linux
+```
+curl -sSL https://get.haskellstack.org/ | sh
+```
+ou 
+```
+wget -qO- https://get.haskellstack.org/ | sh
+```
+### MacOS
+```
+curl -sSL https://get.haskellstack.org/ | sh
+```
+ou 
+```
+wget -qO- https://get.haskellstack.org/ | sh
+```
+### Windows
+- Acesse o site (https://docs.haskellstack.org/en/stable/) para mais informações
+3. Faça um clone do projeto
+```
+git clone https://github.com/UnBParadigmas2024-1/2024.1_G1_Funcional_Filtro_Kalman.git
+```
+4. Entre na pasta
+```
+cd 2024.1_G1_Funcional_Filtro_Kalman
+```
+5. Rode a build
+```
+stack build
+```
+6. Inicie o projeto
+```
+stack run
+```
 
 ## Uso 
 Explique como usar seu projeto.
@@ -59,14 +102,6 @@ Procure ilustrar em passos, com apoio de telas do software, seja com base na int
 Nessa seção, deve-se revelar de forma clara sobre o funcionamento do software.
 
 ## Vídeo
-Adicione 1 ou mais vídeos com a execução do projeto.
-Procure: 
-(i) Introduzir o projeto;
-(ii) Mostrar passo a passo o código, explicando-o, e deixando claro o que é de terceiros, e o que é contribuição real da equipe;
-(iii) Apresentar particularidades do Paradigma, da Linguagem, e das Tecnologias, e
-(iV) Apresentar lições aprendidas, contribuições, pendências, e ideias para trabalhos futuros.
-OBS: TODOS DEVEM PARTICIPAR, CONFERINDO PONTOS DE VISTA.
-TEMPO: +/- 15min
 
 ## Participações
 Apresente, brevemente, como cada membro do grupo contribuiu para o projeto.
@@ -78,10 +113,10 @@ Apresente, brevemente, como cada membro do grupo contribuiu para o projeto.
 | Davi Marinho da Silva Campos  |  - | - |
 | Diógenes Dantas Lélis Júnior  |  - | - |
 | Bernardo Chaves Pissutti  |  - | - |
-| Denniel William Roriz Lima  |  - | - |
+| Denniel William Roriz Lima  |  Exportar CSV e suas subfunções que é transformar a lista para o formato do item, ou seja, um array de items. E por fim a função de conversão | Excelente |
 | Francisco Mizael Santos da Silva  |  - | - |
 | Mateus Caltabiano Neves Frauzino  |  - | - |
-| Lucas Macedo Barboza  |  - | - |
+| Lucas Macedo Barboza  | Ajuda na estruturação das funções de Medias, desvios padrões e variâncias| Boa |
 
 ## Outros 
 Quaisquer outras informações sobre o projeto podem ser descritas aqui. Não esqueça, entretanto, de informar sobre:
@@ -91,5 +126,9 @@ Quaisquer outras informações sobre o projeto podem ser descritas aqui. Não es
 (iV) Trabalhos Futuros.
 
 ## Fontes
-Referencie, adequadamente, as referências utilizadas.
-Indique ainda sobre fontes de leitura complementares.
+<!-- Referencie, adequadamente, as referências utilizadas.
+Indique ainda sobre fontes de leitura complementares. -->
+1. HASKELL. Documentação do Haskell. Disponível em: https://www.haskell.org/documentation/. Acesso em: 15 de abril de 2024.
+2. HASKELL STACK. Documentação do Haskell Stack. Disponível em: https://docs.haskellstack.org/en/stable/. Acesso em: 15 de abril de 2024.
+3. APRENDER 3. Materiais disponibilizados em: https://aprender3.unb.br/course/view.php?id=22091&section=2. Acesso em: 15 de abril de 2024.
+4. CASSAVA. Documentação do Cassava. Disponível em: https://hackage.haskell.org/package/cassava. Acesso em: 15 de abril de 2024.
