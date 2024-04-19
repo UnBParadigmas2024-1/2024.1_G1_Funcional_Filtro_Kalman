@@ -38,15 +38,15 @@ getFluxSubMenu option tempo sensor1 sensor2 signal =  do
     case option of
         "1" -> do
             let grafico = renderGraf tempo sensor1
-            saveGraf grafico (Just "grafico1") (Just "png")
+            saveGraf grafico (Just "sensor1") (Just "png")
             submenu tempo sensor1 sensor2 signal
         "2" -> do
             let grafico = renderGraf tempo sensor2
-            saveGraf grafico (Just "grafico2") (Just "png")
+            saveGraf grafico (Just "sensor2") (Just "png")
             submenu tempo sensor1 sensor2 signal
         "3" -> do
             let grafico = renderGraf tempo signal
-            saveGraf grafico (Just "grafico1") (Just "png")
+            saveGraf grafico (Just "sinal") (Just "png")
             submenu tempo sensor1 sensor2 signal
         "4" -> do 
             items <- return (Vector.fromList(convertItems tempo signal))
