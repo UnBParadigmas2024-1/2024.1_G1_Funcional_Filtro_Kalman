@@ -37,9 +37,7 @@ library
       src
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
   build-depends:
-      Chart
-    , Chart-cairo
-    , base >=4.7 && <5
+      base >=4.7 && <5
     , bytestring
     , cassava
     , random
@@ -57,9 +55,7 @@ executable project-exe
       app
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      Chart
-    , Chart-cairo
-    , base >=4.7 && <5
+      base >=4.7 && <5
     , bytestring
     , cassava
     , project
@@ -79,9 +75,7 @@ test-suite project-test
       test
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      Chart
-    , Chart-cairo
-    , base >=4.7 && <5
+      base >=4.7 && <5
     , bytestring
     , cassava
     , project

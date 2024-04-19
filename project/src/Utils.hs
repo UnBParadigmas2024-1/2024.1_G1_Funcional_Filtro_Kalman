@@ -203,7 +203,7 @@ varianciaReal :: Double -> IO (Double)
 varianciaReal variancia = do 
     return (variancia ^ 2)
   
-renderGraf :: [Double] -> [Double] -> Renderable ()
+renderGraf :: [Double] -> [Double] -> IO(Renderable ())
 renderGraf z1 z2 = toRenderable layout
   where
     val = plot_lines_style . line_color .~ opaque blue
@@ -211,10 +211,10 @@ renderGraf z1 z2 = toRenderable layout
           $ plot_lines_title .~ "valores"
           $ def
 
-    layout = layout_title .~ "Resultados"
+    return (layout_title .~ "Resultados"
       $ layout_grid_last .~ False
       $ layout_plots .~ [toPlot val]
-      $ def
+      $ def)
 
 saveGraf :: Renderable a -> Maybe String -> Maybe String -> IO () 
 saveGraf graf nm fmt = do
