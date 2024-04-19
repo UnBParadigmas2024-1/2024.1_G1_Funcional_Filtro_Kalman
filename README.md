@@ -113,6 +113,7 @@ Apresente, brevemente, como cada membro do grupo contribuiu para o projeto.
 | Davi Marinho da Silva Campos  |  - | - |
 | Diógenes Dantas Lélis Júnior  |  - | - |
 | Bernardo Chaves Pissutti  |  - | - |
+| Abraão Alves  |  ajuda na construção e definição daplotagem de graficos  e contrução do menu principal da aplicação | Boa |
 | Denniel William Roriz Lima  |  Exportar CSV e suas subfunções que é transformar a lista para o formato do item, ou seja, um array de items. E por fim a função de conversão | Excelente |
 | Francisco Mizael Santos da Silva  |  - | - |
 | Mateus Caltabiano Neves Frauzino  |  - | - |
@@ -120,6 +121,15 @@ Apresente, brevemente, como cada membro do grupo contribuiu para o projeto.
 
 ## Outros 
 Quaisquer outras informações sobre o projeto podem ser descritas aqui. Não esqueça, entretanto, de informar sobre:
+### Organização de tarefas 
+O grupo foi separado em quatro grupos menores para as atividades ficarem melhor organizadas. A divisão de tarefas entre cada subgrupo foi a  seguinte:
+* **Dupla A**: Importar os dados de entrada (csv) e Parsear os dados de entrada para
+que o haskel consiga interpretar e Exportar os dados de saída (csv);
+* **Quarteto B**: Calcular média real (Calcula media normal), Cálcula desvio padrão real (Calcula desvio padrão real normal) e Estimar valores de erros;
+* **Dupla C** : Calcular a Predição e Calcular a correção. 
+* **Trio D**: Plotar no dados no gráficos de forma sobreposta (Valores de erro, Médias,
+Desvio)
+
 (i) Lições Aprendidas;
 (ii) Percepções;
 (iii) Contribuições e Fragilidades, e
