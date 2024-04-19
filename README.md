@@ -88,11 +88,23 @@ git clone https://github.com/UnBParadigmas2024-1/2024.1_G1_Funcional_Filtro_Kalm
 ```
 cd 2024.1_G1_Funcional_Filtro_Kalman
 ```
-5. Rode a build
+5. Nos ambientes de linux e MacOs é necessario que instale a biblioteca de gráficos
+* para instalar a biblioteca no linux 
+
+```
+sudo apt-get install libcairo2-dev
+```
+
+* para instalar a biblioteca no linux
+
+```
+   brew install cairo && brew install pkg-config
+```
+1. Rode a build
 ```
 stack build
 ```
-6. Inicie o projeto
+1. Inicie o projeto
 ```
 stack run
 ```
@@ -117,7 +129,7 @@ Apresente, brevemente, como cada membro do grupo contribuiu para o projeto.
 | Abraão Alves  |  ajuda na construção e definição daplotagem de graficos  e contrução do menu principal da aplicação | Boa |
 | Denniel William Roriz Lima  |  Exportar CSV e suas subfunções que é transformar a lista para o formato do item, ou seja, um array de items. E por fim a função de conversão | Excelente |
 | Francisco Mizael Santos da Silva  |  Implementação da plotagem dos graficos  | Excelente |
-| Mateus Caltabiano Neves Frauzino  |  - | - |
+| Mateus Caltabiano Neves Frauzino  |  Edição do vídeo e implementação de todas as funções do quarteto B exceto a de variância  | Excelente |
 | Lucas Macedo Barboza  | Ajuda na estruturação das funções de Medias, desvios padrões e variâncias| Boa |
 
 ## Outros 
