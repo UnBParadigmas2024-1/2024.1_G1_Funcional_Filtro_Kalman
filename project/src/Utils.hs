@@ -15,7 +15,7 @@ import Data.Text (Text)
 import qualified Data.Text.Encoding as Text
 
 import Data.Vector (Vector)
-import qualified Data.Vector as Vector
+import qualified Data.Vector as Tv
 import qualified Data.Csv as Cassava
 
 import Data.Int (Int)
@@ -29,7 +29,7 @@ import Control.Monad (void)
 
 itemHeader :: Header
 itemHeader =
-  Vector.fromList
+  Tv.fromList
     [ "Tempo"
     , "Valor"
     ]
@@ -58,8 +58,8 @@ parserCsvGrouped filePath = do
     case decode NoHeader csvData of
         Left err -> error err
         Right v ->
-            let xs = Vector.toList (Vector.map fst v)
-                ys = Vector.toList (Vector.map snd v)
+            let xs = Tv.toList (Tv.map fst v)
+                ys = Tv.toList (Tv.map snd v)
                 groupedXs = groupAt 1000 xs
                 groupedYs = groupAt 1000 ys
             in return (groupedXs, groupedYs)
@@ -67,37 +67,37 @@ parserCsvGrouped filePath = do
 parserCsv :: FilePath -> IO [[Double]]
 parserCsv filePath = do
     csvData <- ByteString.readFile filePath
-    case decode NoHeader csvData :: Either String (Vector.Vector CsvRow) of
+    case decode NoHeader csvData :: Either String (Tv.Vector CsvRow) of
         Left err -> error err
-        Right v -> return $ map (\(x, y) -> [x, y]) (Vector.toList v)
+        Right v -> return $ map (\(x, y) -> [x, y]) (Tv.toList v)
 
 
 parserCsvNotGrouped :: FilePath -> IO ([Double], [Double])
 parserCsvNotGrouped filePath = do
     csvData <- ByteString.readFile filePath
-    case decode NoHeader csvData :: Either String (Vector.Vector CsvRow) of
+    case decode NoHeader csvData :: Either String (Tv.Vector CsvRow) of
         Left err -> error err
         Right v -> do
-            let (xs, ys) = Vector.foldr' (\(x, y) (accX, accY) -> (x : accX, y : accY)) ([], []) v
+            let (xs, ys) = Tv.foldr' (\(x, y) (accX, accY) -> (x : accX, y : accY)) ([], []) v
             return (xs, ys)
 
 
 parserCsvNotGroupedOne :: FilePath -> IO [[Double]]
 parserCsvNotGroupedOne filePath = do
     csvData <- ByteString.readFile filePath
-    case decode NoHeader csvData :: Either String (Vector.Vector CsvRow) of
+    case decode NoHeader csvData :: Either String (Tv.Vector CsvRow) of
         Left err -> error err
         Right v -> do
-            let (xs, ys) = Vector.foldr' (\(x, y) (accX, accY) -> (x : accX, y : accY)) ([], []) v
+            let (xs, ys) = Tv.foldr' (\(x, y) (accX, accY) -> (x : accX, y : accY)) ([], []) v
             return [reverse xs, reverse ys]
 
 convertItems :: [Double] -> [Double] -> [Item]
 convertItems = zipWith Item
 
-encodeItems :: Vector Item -> ByteString
+encodeItems :: Tv.Vector Item -> ByteString
 encodeItems = Cassava.encodeDefaultOrderedByName . Foldable.toList
 
-encodeItemsToFile :: FilePath -> Vector Item -> IO ()
+encodeItemsToFile :: FilePath -> Tv.Vector Item -> IO ()
 encodeItemsToFile filePath = ByteString.writeFile filePath . encodeItems
 
 parseToInt :: String -> Int
@@ -202,7 +202,30 @@ desvioPadraoAgrupamento lista = sqrt (sum (map (\x -> (x - mediaAritmetica lista
 varianciaReal :: Double -> IO (Double)
 varianciaReal variancia = do 
     return (variancia ^ 2)
-  
+
+
+renderGraf :: [Double] -> [Double] -> Renderable ()
+renderGraf z1 z2 = toRenderable layout
+  where
+    val = plot_lines_style . line_color .~ opaque blue
+          $ plot_lines_values .~ [ zip z1 z2 ]
+          $ plot_lines_title .~ "valores"
+          $ def
+
+    layout = layout_title .~ "Resultados"
+      $ layout_grid_last .~ False
+      $ layout_plots .~ [toPlot val]
+      $ def
+
+saveGraf :: Renderable a -> Maybe String -> Maybe String -> IO ()
+saveGraf graf nm fmt = do
+  namedGraf (maybe "grafico" id nm) (maybe "svg" id fmt) graf
+  where
+    namedGraf :: String -> String -> Renderable a -> IO ()
+    namedGraf sNm sFmt grf = void $ renderableToFile def ("img/" ++ sNm ++ "." ++ sFmt) grf
+    
+
+{--
 renderGraf :: [Double] -> [Double] -> IO(Renderable ())
 renderGraf z1 z2 = toRenderable layout
   where
@@ -222,3 +245,4 @@ saveGraf graf nm fmt = do
   where
     namedGraf :: String -> String -> Renderable a -> IO ()
     namedGraf sNm sFmt grf = void $ renderableToFile def ("img/" ++ sNm ++ "." ++ sFmt) grf
+--}

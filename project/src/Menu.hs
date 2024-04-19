@@ -37,16 +37,16 @@ getFluxSubMenu :: String -> [Double] -> [Double] -> [Double] -> [Double] -> IO (
 getFluxSubMenu option tempo sensor1 sensor2 signal =  do
     case option of
         "1" -> do
-            renderable <- renderGraf tempo sensor1
-            saveGraf renderable "grafico1" "png"
+            let grafico = renderGraf tempo sensor1
+            saveGraf grafico (Just "grafico1") (Just "png")
             submenu tempo sensor1 sensor2 signal
         "2" -> do
-            renderable <- renderGraf tempo sensor2
-            saveGraf renderable "grafico1" "png"
+            let grafico = renderGraf tempo sensor2
+            saveGraf grafico (Just "grafico2") (Just "png")
             submenu tempo sensor1 sensor2 signal
         "3" -> do
-            renderable <- renderGraf tempo signal
-            saveGraf renderable "grafico1" "png"
+            let grafico = renderGraf tempo signal
+            saveGraf grafico (Just "grafico1") (Just "png")
             submenu tempo sensor1 sensor2 signal
         "4" -> do 
             items <- return (Vector.fromList(convertItems tempo signal))
