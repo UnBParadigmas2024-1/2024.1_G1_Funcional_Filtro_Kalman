@@ -115,6 +115,7 @@ Procure ilustrar em passos, com apoio de telas do software, seja com base na int
 Nessa seção, deve-se revelar de forma clara sobre o funcionamento do software.
 
 ## Vídeo
+Link para o vídeo: https://www.youtube.com/watch?v=KzUGizwNOyk&ab_channel=Di%C3%B3genesJ%C3%BAnior
 
 ## Participações
 Apresente, brevemente, como cada membro do grupo contribuiu para o projeto.
